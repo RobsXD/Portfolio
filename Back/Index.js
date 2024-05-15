@@ -17,4 +17,26 @@ type person {
     street: string!
     city: string!
     id: ID!
-}`
+}
+
+type Query {
+    personCount: Int!
+    allPersons: [person]!
+}
+`
+
+const resolvers = {
+    Query: {
+        personCount: () => persons.length,
+        allPersons: () => persons,
+    }
+}
+
+const server = new ApolloServer({
+    typeDefs: typeDefs,
+    resolvers,
+})
+ 
+server.listen().then(({ url }) => {
+    console.log(`Server ready at ${url}`)
+})
